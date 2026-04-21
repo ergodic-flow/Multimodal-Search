@@ -18,7 +18,6 @@ Launch the app with `docker compose up`. Open `http://localhost:3000` to see the
 ![patch search](/assets/patch.jpeg)
 
 ### Text Search
-![text search](/assets/text.jpeg)
 
 
 
