@@ -1,4 +1,4 @@
-# Vision Search
+# Multimodal Search
 
 Embedding-based image and text retrieval for a folder of images.
 Supports image/text/patch search. Useful for exploring and viewing your images.
