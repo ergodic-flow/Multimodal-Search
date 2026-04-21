@@ -8,7 +8,7 @@ COPY .python-version ./
 RUN pip install --no-cache-dir uv && \
     uv sync --frozen --no-dev
 
-COPY knn.py embedder.py search.py ./
+COPY knn.py embedder.py ./
 COPY static/ static/
 
 ENV HF_HOME=/app/.hf_cache
