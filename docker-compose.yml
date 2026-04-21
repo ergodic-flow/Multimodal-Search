@@ -1,0 +1,40 @@
+services:
+  knn_dinov2_small:
+    build: .
+    command: ["uv", "run", "python", "knn.py", "--vector-file", "/data/vectors_dinov2_small.jsonl", "--id-key", "id", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - ./data:/data:ro
+    expose:
+      - "8000"
+
+  knn_clip_vitb32_laion2b:
+    build: .
+    command: ["uv", "run", "python", "knn.py", "--vector-file", "/data/vectors_clip_vit_b32.jsonl", "--id-key", "id", "--host", "0.0.0.0", "--port", "8000"]
+    volumes:
+      - ./data:/data:ro
+    expose:
+      - "8000"
+
+  embedder:
+    build: .
+    command: ["uv", "run", "python", "embedder.py", "--host", "0.0.0.0", "--port", "8001"]
+    volumes:
+      - hf_cache:/app/.hf_cache
+    expose:
+      - "8001"
+
+  web:
+    image: nginx:alpine
+    ports:
+      - "3000:80"
+    volumes:
+      - ./static:/usr/share/nginx/html:ro
+      - ./images:/images:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - knn_dinov2_small
+      - knn_clip_vitb32_laion2b
+      - embedder
+
+volumes:
+  hf_cache:
